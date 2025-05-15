@@ -92,13 +92,30 @@ def generate_multiple_recipes(ingredients, num_recipes=5):
     return recipes
 
 # Function to translate back
-def translate_back(text, target_lang):
-    # Load the translation model
-    model, tokenizer = load_translation_model("en", target_lang)
-    
-    inputs = tokenizer(text, return_tensors="pt", padding=True).to(device)
-    translated = model.generate(**inputs)
-    return tokenizer.decode(translated[0], skip_special_tokens=True)
+def translate_back(text, target_lang, max_length=512):
+
+    if isinstance(text, list):
+        text = " ".join([str(t) for t in text if isinstance(t, str) and t.strip()])
+    elif not isinstance(text, str) or not text.strip():
+        return ""
+
+    try:
+        model, tokenizer = load_translation_model("en", target_lang)
+        model.to(device)
+        inputs = tokenizer(
+            text,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+            max_length=max_length
+        ).to(device)
+        outputs = model.generate(**inputs)
+        return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    except Exception as e:
+        print(f"[translate_back error]: {e}\nText: {str(text)[:100]}...")
+        return str(text)
+
 
 # Function to get optional ingredients from the user
 def get_optional_ingredients():
