@@ -79,9 +79,9 @@ def recommend_based_on_cuisin_liked_recipes_or_ingredients(
                         recipe = known_recipes_df.iloc[idx]
                         if preferred_cuisin and recipe['cuisin'] != preferred_cuisin:
                             continue  # Skip if cuisin doesn't match
-                        title = recipe["title"]
-                        ingredients = recipe["ingredients"]
-                        directions = recipe["directions"]
+                        title = recipe["title"] if pd.notna(recipe["title"]) else ""
+                        ingredients = recipe["ingredients"] if pd.notna(recipe["ingredients"]) else ""
+                        directions = recipe["directions"] if pd.notna(recipe["directions"]) else ""
 
                         if selected_language != "en":
                             title = translate_back(title, selected_language) if title else title

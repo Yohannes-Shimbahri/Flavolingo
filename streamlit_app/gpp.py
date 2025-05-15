@@ -63,7 +63,7 @@ def main():
     if "liked_recipes" not in st.session_state:
         st.session_state.liked_recipes = load_liked_recipes()
     
-    st.title("👨‍🍳 FlavorLingo")
+    st.title("👨‍🍳 FlavoLingo")
 
     # Welcome Animation
     st_lottie(welcome_anim, height=300)
