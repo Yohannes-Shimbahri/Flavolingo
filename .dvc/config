@@ -1,5 +1,7 @@
 [core]
     remote = origin
-['remote "origin"']
-    url = s3://dvc
+
+[remote "origin"]
+    url = s3://dagshub/Yohannes-Shimbahri/Flavolingo
     endpointurl = https://dagshub.com/Yohannes-Shimbahri/Flavolingo.s3
+
